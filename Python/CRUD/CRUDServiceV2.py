@@ -7,6 +7,7 @@ from flask import Flask, request
 import pymongo
 from pymongo import MongoClient
 import datetime
+import PreviousAverages
 
 def secondsToSignificant(inputSeconds):
 
@@ -43,7 +44,7 @@ def statusCode(secondsSinceLastUpdate):
 ########### CONNECTION TO PYMONGO ############
 ##############################################
 
-client = MongoClient('gcpserverip', 27017)
+client = MongoClient('localhost', 27017)
 db = client.homeAware
 tsCollection = db.temperatureSensors
 
@@ -56,7 +57,7 @@ serializableData = {"temperature" : "12"}
 app = Flask(__name__)
 
 @app.route('/request/simple', methods=['GET'])
-def user():
+def simple():
 
     data = request.args
     print(data)
@@ -78,6 +79,15 @@ def user():
 	    serializableData["statuscode"] = statusCode(secondsSinceLastUpdate)
 
 	    return jsonify(serializableData)
+
+
+@app.route('/request/multiple/temperature', methods=['GET'])
+def temperatureArray():
+
+    data = request.args
+    print(data)
+
+    return PreviousAverages.lastDayTemperatures(str(data['id']))
     
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@ from pymongo import MongoClient
 from datetime import timedelta, datetime, date
 import json
 
-def lastDayTemperature(id):
+def lastDayTemperatures(id):
 
 	client = MongoClient('localhost', 27017)
 
