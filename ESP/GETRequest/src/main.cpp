@@ -285,6 +285,7 @@ void performGETRequest(){
 
 void setup() {
 
+  //storeCredentialsInEEPROM("NIAQ", "indoorairquality");
   loadCredentialsFromEEPROM();
 
 	//Starting DHT Sensor
